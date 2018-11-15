@@ -1,37 +1,42 @@
-class Coin_Combo
-  attr_accessor(:user_input, :quarters, :dimes, :nickels, :pennies)
-
-  def initialize(user_input, quarters, dimes, nickels, pennies)
-    @user_input = user_input
-    @quarters = quarters
-    @dimes = dimes
-    @nickels = nickels
-    @pennies = pennies
+def create_input_array(user_input)
+  input_array = []
+  number = 1
+  (user_input-1).times() do
+    number = number + 1
+  input_array.push(number)
   end
+  return input_array
+end
 
-
-  def calc_quarters()
-    self.quarters = self.user_input / 25
-  end
-
-  def calc_coins()
-    index = 0
-    coin_types_array = [25,10,5,1]
-    output_array = []
-    remainder = self.user_input
-    while (index < coin_types_array.length)
-      #puts "INDEX : #{index}"
-      #puts "NEW LOOP REMAINDER: #{remainder}"
-      output_array.push(remainder / coin_types_array[index])
-      #puts "OUTPUT ARRAY: #{output_array}"
-      remainder = remainder % coin_types_array[index]
-      #puts "NEW REMAINDER: #{remainder}"
-      index = index + 1
-
-      if index > 10
-        break
-      end
+def pop_array(input_array,test_mod_number)
+  # x = [2,3,4,5,6,7,8,9,10]
+  output_array = []
+  index = 0
+  while (index < input_array.length())
+    if (input_array[index] % test_mod_number) != 0
+      output_array.push(input_array[index])
     end
-    return output_array
+    index = index + 1
+    # if index > 1000 #infinite loop checker
+    #   break
+    # end
   end
+  return output_array
+end
+
+def prime_sifting(input_array)
+  output_array = []
+  index = 0
+  while output_array[-1] != input_array[0]
+    if input_array[0] == nil
+      break
+    end
+    #puts "index is: #{index}"
+    output_array.push(input_array[0])
+    #puts "output array is: #{output_array}"
+    input_array = pop_array(input_array,input_array[0])
+    #puts "input_array is: #{input_array}"
+    index = index + 1
+  end
+  return output_array
 end
